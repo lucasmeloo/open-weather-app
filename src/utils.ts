@@ -10,7 +10,9 @@ export const getTimeByTimezone = (
   timestamp: number = 0,
   timezone: number = 0,
 ) => {
-  let time = (timestamp + timezone + 10800) * 1000;
+  let timezoneOffset = new Date().getTimezoneOffset();
+  timezoneOffset = timezoneOffset * 60;
+  let time = (timestamp + timezone + timezoneOffset) * 1000;
 
   return new Date(time).toLocaleTimeString(navigator.language, {
     timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
