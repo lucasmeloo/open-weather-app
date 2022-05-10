@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, createContext } from 'react';
 
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
@@ -17,6 +17,9 @@ interface CityData {
 interface SetCityData {
   setCityData: (data: CityData) => void;
 }
+
+export const CitiesWeatherContext = createContext<any>(null!);
+
 const cities = [
   'Alaska',
   'Recife',
