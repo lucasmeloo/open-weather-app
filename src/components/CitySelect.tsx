@@ -14,10 +14,9 @@ interface CityData {
   timezone: number;
   temp: number;
 }
-interface GetCityData {
-  getCityData: (data: CityData) => void;
+interface SetCityData {
+  setCityData: (data: CityData) => void;
 }
-
 const cities = [
   'Alaska',
   'Recife',
@@ -30,7 +29,7 @@ const cities = [
   'Tokyo',
 ].sort();
 
-export default function CitySelect({ getCityData }: GetCityData) {
+export default function CitySelect({ setCityData }: SetCityData) {
   const [city, setCity] = useState(cities[0]);
   const handleChange = async (event: SelectChangeEvent) => {
     setCity(event.target.value as string);
@@ -39,7 +38,7 @@ export default function CitySelect({ getCityData }: GetCityData) {
   useEffect(() => {
     const data = getStoredData(city);
     if (data) {
-      getCityData({
+      setCityData({
         city,
         sunset: data.sunset,
         sunrise: data.sunrise,
@@ -62,10 +61,10 @@ export default function CitySelect({ getCityData }: GetCityData) {
             temp: result.main.temp,
           };
           setStoredData(finalResult);
-          getCityData(finalResult);
+          setCityData(finalResult);
         });
     }
-  }, [city, getCityData]);
+  }, [city, setCityData]);
 
   return (
     <StyledCitySelect>

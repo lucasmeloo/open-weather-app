@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 
 import Grid from '@mui/material/Grid';
 
@@ -13,6 +13,8 @@ import {
   convertToFahrenheit,
   getTimeByTimezone,
 } from './utils';
+
+export const CityContext = createContext('value');
 
 interface CityData {
   city: string;
@@ -40,7 +42,7 @@ function App() {
     setCityTemperatureConverted(temperatureConverted);
   }, [cityTemperature, temperatureUnitToggle, cityTemperatureConverted]);
 
-  const getCityData = (data: CityData) => {
+  const setCityData = (data: CityData) => {
     setSunrise(getTimeByTimezone(data.sunrise, data.timezone));
     setSunset(getTimeByTimezone(data.sunset, data.timezone));
     setWeatherIcon(data.icon);
@@ -56,7 +58,7 @@ function App() {
       <Header />
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <CitySelect getCityData={getCityData} />
+          <CitySelect setCityData={setCityData} />
         </Grid>
         <Grid item xs={6}>
           <TemperatureUnitSwitch
