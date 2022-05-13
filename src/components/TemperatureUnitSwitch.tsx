@@ -14,7 +14,6 @@ export default function TemperatureUnitSwitch({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     convertTemperatureUnit(event.target.checked);
   };
-
   return (
     <StyledTemperatureUnitSwitch>
       <p>°C</p>

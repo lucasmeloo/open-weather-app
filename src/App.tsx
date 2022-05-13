@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 
 import Grid from '@mui/material/Grid';
 
-import CitySelect, { CitiesWeatherContext } from './components/CitySelect';
+import CitySelect from './components/CitySelect';
 import Header from './components/Header';
 import { StyledContainer } from './components/styles/Container.styled';
 import SunriseSunsetFooter from './components/SunriseSunsetFooter';
@@ -22,6 +22,14 @@ interface CityData {
   timezone: number;
   temp: number;
 }
+interface CityWeatherData {
+  cityTemperatureConverted: number | undefined;
+  sunrise: string | undefined;
+  sunset: string | undefined;
+  temperatureUnitToggle: boolean;
+  weatherIcon: string | undefined;
+}
+export const CityWeatherContext = createContext<CityWeatherData>(null!);
 
 function App() {
   const [cityTemperature, setCityTemperature] = useState<number>(0);
@@ -38,7 +46,7 @@ function App() {
       ? convertToFahrenheit(cityTemperature)
       : convertToCelsius(cityTemperature);
     setCityTemperatureConverted(temperatureConverted);
-  }, [cityTemperature, temperatureUnitToggle, cityTemperatureConverted]);
+  }, [cityTemperature, temperatureUnitToggle]);
 
   const setCityData = (data: CityData) => {
     setSunrise(getTimeByTimezone(data.sunrise, data.timezone));
@@ -53,8 +61,14 @@ function App() {
 
   return (
     <StyledContainer>
-      <CitiesWeatherContext.Provider
-        value={{ cityTemperatureConverted, temperatureUnitToggle, weatherIcon }}
+      <CityWeatherContext.Provider
+        value={{
+          cityTemperatureConverted,
+          temperatureUnitToggle,
+          weatherIcon,
+          sunrise,
+          sunset,
+        }}
       >
         <Header />
         <Grid container spacing={2}>
@@ -69,22 +83,11 @@ function App() {
           <Grid item xs={12}>
             {cityTemperatureConverted && weatherIcon && <TemperatureDisplay />}
           </Grid>
-          {/* <Grid item xs={12}>
-            {cityTemperatureConverted && weatherIcon && (
-              <TemperatureDisplay
-                temp={cityTemperatureConverted}
-                type={temperatureUnitToggle ? 'ºF' : 'ºC'}
-                weatherIcon={weatherIcon}
-              />
-            )}
-          </Grid> */}
           <Grid item xs={12}>
-            {sunrise && sunset && (
-              <SunriseSunsetFooter sunrise={sunrise} sunset={sunset} />
-            )}
+            {sunrise && sunset && <SunriseSunsetFooter />}
           </Grid>
         </Grid>
-      </CitiesWeatherContext.Provider>
+      </CityWeatherContext.Provider>
     </StyledContainer>
   );
 }

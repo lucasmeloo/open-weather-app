@@ -1,20 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+import { CityWeatherContext } from '../App';
 
 import { StyledSunriseSunsetFooter } from './styles/SunriseSunsetFooter.styled';
 
-interface sunsetSunriseTime {
-  sunrise: string;
-  sunset: string;
-}
-
-export default function SunriseSunsetFooter({
-  sunrise,
-  sunset,
-}: sunsetSunriseTime) {
+export default function SunriseSunsetFooter() {
+  const weatherData = useContext(CityWeatherContext);
   return (
     <StyledSunriseSunsetFooter>
-      <h4>{`Sunrise: ${sunrise}`}</h4>
-      <h4>{`Sunset: ${sunset}`}</h4>
+      <h4>{`Sunrise: ${weatherData.sunrise}`}</h4>
+      <h4>{`Sunset: ${weatherData.sunset}`}</h4>
     </StyledSunriseSunsetFooter>
   );
 }
