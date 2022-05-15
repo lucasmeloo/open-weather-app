@@ -5,6 +5,7 @@ import { CityWeatherContext } from '../App';
 
 export default function TemperatureDisplay() {
   const weatherData = useContext(CityWeatherContext);
+  console.log(weatherData);
 
   return (
     <StyledTemperatureDisplay>

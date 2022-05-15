@@ -26,6 +26,8 @@ const cities = [
   'Coimbra',
   'New York',
   'Vancouver',
+  'Porto Alegre',
+  'Sapucaia do Sul',
   'Tokyo',
 ].sort();
 
